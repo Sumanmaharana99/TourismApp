@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Booking Confirmed</title>
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+            color: #2d3748;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        .card {
+            background: #fff;
+            padding: 60px 50px;
+            border-radius: 20px;
+            text-align: center;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.25);
+            width: 420px;
+        }
+
+        h1 {
+            color: #38a169;
+            margin-bottom: 15px;
+            font-size: 28px;
+        }
+
+        p {
+            color: #4a5568;
+            margin-bottom: 25px;
+            font-size: 16px;
+        }
+
+        .btn {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            padding: 12px 25px;
+            text-decoration: none;
+            border-radius: 10px;
+            font-weight: 600;
+            transition: 0.3s ease;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+        }
+    </style>
+</head>
+<body>
+<div class="card">
+    <h1>Booking Successful!</h1>
+    <p th:text="${message}">Your trip has been booked successfully!</p>
+    <a th:href="@{/user/dashboard(email=${booking.userEmail})}" class="btn">Back to Dashboard</a>
+
+</div>
+</body>
+</html>

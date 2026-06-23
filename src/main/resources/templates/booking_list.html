@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Bookings</title>
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+            margin: 0;
+            padding: 0;
+            color: #2d3748;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        header {
+            width: 100%;
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(10px);
+            color: white;
+            padding: 20px 60px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        header h2 {
+            font-size: 22px;
+            letter-spacing: 0.5px;
+        }
+
+        header a, .logout-btn {
+            color: white;
+            text-decoration: none;
+            font-weight: 600;
+            margin: 0 10px;
+        }
+
+        .logout-btn {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            border: none;
+            padding: 10px 20px;
+            border-radius: 10px;
+            cursor: pointer;
+        }
+
+        h1 {
+            color: white;
+            margin: 40px 0 20px;
+        }
+
+        table {
+            width: 90%;
+            max-width: 1000px;
+            border-collapse: collapse;
+            background: #fff;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+        }
+
+        th, td {
+            padding: 14px 20px;
+            text-align: center;
+            border-bottom: 1px solid #edf2f7;
+        }
+
+        th {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            font-weight: 600;
+        }
+
+        tr:hover {
+            background-color: #f1f5f9;
+        }
+
+        .no-bookings {
+            background: white;
+            padding: 40px 60px;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+            margin-top: 100px;
+            text-align: center;
+            color: #4a5568;
+        }
+
+        .back-btn {
+            margin-top: 25px;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            padding: 12px 25px;
+            border-radius: 10px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: 0.3s;
+        }
+
+        .back-btn:hover {
+            transform: translateY(-2px);
+        }
+        .cancel-btn {
+    background: #e53e3e;
+    border: none;
+    padding: 8px 14px;
+    color: white;
+    border-radius: 8px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.cancel-btn:hover {
+    background: #c53030;
+}
+        
+    </style>
+</head>
+<body>
+
+<header>
+    <h2>Tourism Portal</h2>
+    <nav>
+        <a th:href="@{/user/dashboard(email=${userEmail})}">Dashboard</a>
+        <a th:href="@{/bookings/user(email=${userEmail})}" style="border-bottom: 2px solid white;">Bookings</a>
+        <button class="logout-btn" onclick="window.location.href='/'">Logout</button>
+    </nav>
+</header>
+
+<h1>My Bookings</h1>
+
+<!-- If no bookings exist -->
+<div th:if="${#lists.isEmpty(bookings)}" class="no-bookings">
+    <p>You haven’t made any bookings yet!</p>
+    <a th:href="@{/user/dashboard(email=${userEmail})}" class="back-btn">Go Back</a>
+</div>
+
+<!-- Show bookings if available -->
+<table th:if="${!#lists.isEmpty(bookings)}">
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Destination</th>
+            <th>Travel Date</th>
+            <th>No. of Persons</th>
+            <th>Special Request</th>
+            <th>Booked On</th>
+            <th>Action</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr th:each="b : ${bookings}">
+            <td th:text="${b.id}"></td>
+            <td th:text="${b.destination}"></td>
+            <td th:text="${#dates.format(b.travelDate, 'dd-MM-yyyy')}"></td>
+            <td th:text="${b.numPersons}"></td>
+            <td th:text="${b.specialRequest}"></td>
+            <td th:text="${#dates.format(b.bookingDate, 'dd-MM-yyyy HH:mm')}"></td>
+            <td>
+               <form th:action="@{/bookings/cancel}" method="post"
+      onsubmit="return confirm('Are you sure you want to cancel this booking?');">
+    <input type="hidden" name="id" th:value="${b.id}">
+    <input type="hidden" name="email" th:value="${userEmail}">
+    <button type="submit" class="cancel-btn">Cancel</button>
+</form>
+
+
+            </td>
+        </tr>
+    </tbody>
+</table>
+
+
+<a th:href="@{/user/dashboard(email=${userEmail})}" class="back-btn" 
+   th:if="${!#lists.isEmpty(bookings)}">Back to Dashboard</a>
+
+</body>
+</html>

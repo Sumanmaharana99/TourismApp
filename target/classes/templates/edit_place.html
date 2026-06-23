@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Edit Tourist Place</title>
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+        }
+        .form-container {
+            background: white;
+            padding: 40px;
+            border-radius: 15px;
+            width: 400px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+        }
+        h2 { color: #1e3c72; text-align: center; }
+        input {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 15px;
+            border-radius: 8px;
+            border: 1px solid #cbd5e0;
+        }
+        button {
+            width: 100%;
+            padding: 12px;
+            border: none;
+            border-radius: 10px;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            font-weight: 600;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+
+<div class="form-container">
+    <h2>Edit Tourist Package</h2>
+    <form th:action="@{/admin/places/update}" method="post" th:object="${tourist}">
+        <input type="hidden" th:field="*{id}">
+        <input type="text" th:field="*{name}" placeholder="Package Name" required>
+        <input type="text" th:field="*{city}" placeholder="City" required>
+        <input type="text" th:field="*{packageType}" placeholder="Package Type" required>
+        <input type="number" th:field="*{budget}" placeholder="Budget" required>
+        <button type="submit">Update</button>
+    </form>
+</div>
+
+</body>
+</html>

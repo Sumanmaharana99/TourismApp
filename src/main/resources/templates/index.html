@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Tourist Directory</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+<h2 style="text-align:center; color:blue;">Tourist Directory</h2>
+
+<div style="text-align:right; margin:10px;">
+    <a href="/tourists/add">
+        <button>+ Add Tourist</button>
+    </a>
+</div>
+
+<table border="1" style="width:100%; text-align:center;">
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Name</th>
+            <th>City</th>
+            <th>Package Type</th>
+            <th>Budget</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr th:each="tourist : ${tourists}">
+            <td th:text="${tourist.id}"></td>
+            <td th:text="${tourist.name}"></td>
+            <td th:text="${tourist.city}"></td>
+            <td th:text="${tourist.packageType}"></td>
+            <td th:text="${tourist.budget}"></td>
+            <td>
+                <a th:href="@{'/tourists/edit/' + ${tourist.id}}">Edit</a> |
+                <a th:href="@{'/tourists/delete/' + ${tourist.id}}"
+                   onclick="return confirm('Are you sure?')">Delete</a>
+            </td>
+        </tr>
+    </tbody>
+</table>
+</body>
+</html>

@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Welcome Portal</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', 'Segoe UI', sans-serif;
+            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            position: relative;
+            overflow: hidden;
+            color: white;
+        }
+
+        body::before {
+            content: '';
+            position: absolute;
+            width: 500px;
+            height: 500px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 50%;
+            top: -250px;
+            right: -250px;
+        }
+
+        body::after {
+            content: '';
+            position: absolute;
+            width: 400px;
+            height: 400px;
+            background: rgba(255, 255, 255, 0.03);
+            border-radius: 50%;
+            bottom: -200px;
+            left: -200px;
+        }
+
+        .container {
+            text-align: center;
+            position: relative;
+            z-index: 10;
+        }
+
+        h1 {
+            font-size: 3rem;
+            font-weight: 600;
+            letter-spacing: 2px;
+            margin-bottom: 10px;
+        }
+
+        p {
+            font-size: 1.1rem;
+            color: rgba(255, 255, 255, 0.85);
+            margin-bottom: 50px;
+        }
+
+        .card-container {
+            display: flex;
+            justify-content: center;
+            gap: 50px;
+            flex-wrap: wrap;
+        }
+
+        .card {
+            background: rgba(255, 255, 255, 0.08);
+            border-radius: 20px;
+            padding: 40px 30px;
+            width: 260px;
+            backdrop-filter: blur(10px);
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.25);
+        }
+
+        .card:hover {
+            transform: translateY(-10px);
+            background: rgba(255, 255, 255, 0.12);
+        }
+
+        .icon {
+            width: 80px;
+            height: 80px;
+            margin: 0 auto 20px;
+            background: linear-gradient(145deg, #6a11cb, #2575fc);
+            border-radius: 18px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .icon svg {
+            width: 40px;
+            height: 40px;
+            stroke: white;
+            stroke-width: 2;
+            fill: none;
+        }
+
+        h2 {
+            font-size: 1.4rem;
+            margin-bottom: 10px;
+        }
+
+        .desc {
+            font-size: 0.95rem;
+            color: rgba(255, 255, 255, 0.75);
+            margin-bottom: 25px;
+            line-height: 1.4;
+        }
+
+        .btn {
+            display: inline-block;
+            background: linear-gradient(145deg, #4a90e2, #357ae8);
+            color: white;
+            border: none;
+            border-radius: 25px;
+            padding: 10px 25px;
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+
+        .btn:hover {
+            background: linear-gradient(145deg, #357ae8, #2a62d0);
+            transform: translateY(-2px);
+        }
+
+        @media (max-width: 700px) {
+            .card-container {
+                flex-direction: column;
+                align-items: center;
+                gap: 30px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h1>WELCOME</h1>
+        <p>Select your portal to continue</p>
+
+        <div class="card-container">
+
+            <!-- USER CARD -->
+            <div class="card">
+                <div class="icon">
+                   
+                    <svg viewBox="0 0 24 24">
+                        <circle cx="12" cy="8" r="4"></circle>
+                        <path d="M4 20c0-4 4-6 8-6s8 2 8 6"></path>
+                    </svg>
+                </div>
+                <h2>User</h2>
+                <p class="desc">Access your personal dashboard and manage your bookings.</p>
+                <a th:href="@{/user/login}" class="btn">Go to User Portal</a>
+            </div>
+
+            <!-- ADMIN CARD -->
+            <div class="card">
+                <div class="icon">
+                  
+                    <svg viewBox="0 0 24 24">
+                        <path d="M12 2l7 3v6c0 5-3 9-7 11-4-2-7-6-7-11V5l7-3z"></path>
+                        <path d="M9 12l2 2 4-4"></path>
+                    </svg>
+                </div>
+                <h2>Admin</h2>
+                <p class="desc">Manage system settings and oversee all operations.</p>
+               <a th:href="@{/admin/login}" class="btn">Go to Admin Portal</a>
+
+
+            </div>
+
+        </div>
+    </div>
+
+</body>
+</html>

@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Dashboard | Tourism Portal</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: flex-start;
+            color: #2d3748;
+            padding: 30px;
+        }
+
+        /* 🌐 Navbar */
+        .navbar {
+            width: 100%;
+            max-width: 1200px;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(15px);
+            border-radius: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 18px 35px;
+            margin-bottom: 40px;
+            color: white;
+        }
+
+        .navbar h2 {
+            font-size: 22px;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+        }
+
+        .navbar ul {
+            list-style: none;
+            display: flex;
+            gap: 25px;
+        }
+
+        .navbar ul li a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            transition: 0.3s;
+        }
+
+        .navbar ul li a:hover,
+        .navbar ul li a.active {
+            color: #dcdcff;
+            border-bottom: 2px solid #fff;
+            padding-bottom: 3px;
+        }
+
+        .logout-btn {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            border: none;
+            padding: 10px 20px;
+            border-radius: 12px;
+            color: white;
+            font-weight: 600;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .logout-btn:hover {
+            transform: translateY(-2px);
+            background: linear-gradient(135deg, #5b6de3, #6b3e95);
+        }
+
+        /*  Dashboard Box */
+        .dashboard-container {
+            width: 100%;
+            max-width: 1200px;
+            background: #fff;
+            border-radius: 22px;
+            padding: 40px 50px;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.25);
+            text-align: center;
+        }
+
+        .welcome {
+            font-size: 28px;
+            font-weight: 600;
+            color: #2d3748;
+            margin-bottom: 10px;
+        }
+
+        .subtitle {
+            font-size: 16px;
+            color: #718096;
+            margin-bottom: 40px;
+        }
+
+        /*  Tour Cards Grid */
+        .tour-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 25px;
+            margin-top: 20px;
+        }
+
+        .tour-card {
+            background: #f8fafc;
+            border-radius: 18px;
+            overflow: hidden;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease;
+        }
+
+        .tour-card:hover {
+            transform: translateY(-8px);
+        }
+
+        .tour-card img {
+            width: 100%;
+            height: 180px;
+            object-fit: cover;
+            border-bottom: 3px solid #e2e8f0;
+        }
+
+        .tour-card-content {
+            padding: 18px;
+            text-align: left;
+        }
+
+        .tour-card-content h3 {
+            font-size: 18px;
+            color: #2d3748;
+            margin-bottom: 8px;
+        }
+
+        .tour-card-content p {
+            font-size: 14px;
+            color: #718096;
+            margin-bottom: 12px;
+        }
+
+        .book-btn {
+            display: inline-block;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            padding: 10px 16px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 500;
+            transition: 0.3s;
+        }
+
+        .book-btn:hover {
+            background: linear-gradient(135deg, #5b6de3, #6b3e95);
+        }
+
+        footer {
+            color: white;
+            margin-top: 50px;
+            opacity: 0.8;
+            font-size: 14px;
+        }
+    </style>
+</head>
+<body>
+    <!--  Navbar -->
+    <div class="navbar">
+        <h2>Tourism Portal</h2>
+        <ul>
+            <li><a href="#" style="cursor: default;">Explore</a></li>
+            <li><a th:href="@{/bookings/user(email=${userEmail})}" class="active">Bookings</a></li>
+            <li><a href="#">Profile</a></li>
+        </ul>
+        <button class="logout-btn" onclick="window.location.href='/'">Logout</button>
+    </div>
+
+    <!--  Dashboard Content -->
+    <div class="dashboard-container">
+        <h1 class="welcome">Welcome, <span th:text="${userEmail}">Traveler</span>!</h1>
+        <p class="subtitle">Discover new destinations and manage your bookings easily.</p>
+
+        <div class="tour-grid">
+            <!-- 1 -->
+            <div class="tour-card">
+                <img src="https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=800&q=80" alt="Goa">
+                <div class="tour-card-content">
+                    <h3>Goa Beaches</h3>
+                    <p>Relax by the shore and enjoy Goa’s beautiful sunsets.</p>
+                    <a th:href="@{'/bookings/new?destination=Goa Beaches&email=' + ${userEmail}}" class="book-btn">Book Now</a>
+                </div>
+            </div>
+
+            <!-- 2 -->
+            <div class="tour-card">
+                <img src="https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=800&q=80" alt="Manali">
+                <div class="tour-card-content">
+                    <h3>Manali Hills</h3>
+                    <p>Escape into nature with scenic mountain views and cozy stays.</p>
+                    <a th:href="@{'/bookings/new?destination=Manali Hills&email=' + ${userEmail}}" class="book-btn">Book Now</a>
+                </div>
+            </div>
+
+            <!-- 3 -->
+            <div class="tour-card">
+                <img src="https://images.unsplash.com/photo-1548013146-72479768bada?auto=format&fit=crop&w=800&q=80" alt="Taj Mahal">
+                <div class="tour-card-content">
+                    <h3>Agra - The Taj</h3>
+                    <p>Witness one of the Seven Wonders of the World with expert guides.</p>
+                    <a th:href="@{'/bookings/new?destination=Agra - The Taj&email=' + ${userEmail}}" class="book-btn">Book Now</a>
+                </div>
+            </div>
+
+            <!-- 4 -->
+            <div class="tour-card">
+                <img src="https://plus.unsplash.com/premium_photo-1697729438401-fcb4ff66d9a8?auto=format&fit=crop&w=800&q=80" alt="Kerala">
+                <div class="tour-card-content">
+                    <h3>Kerala Backwaters</h3>
+                    <p>Enjoy houseboats, palm-lined lagoons, and tranquil beauty.</p>
+                    <a th:href="@{'/bookings/new?destination=Kerala Backwaters&email=' + ${userEmail}}" class="book-btn">Book Now</a>
+                </div>
+            </div>
+
+            <!-- 5 -->
+            <div class="tour-card">
+                <img src="https://images.unsplash.com/photo-1671711847762-b8308b444a42?ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&q=80&w=2070" alt="Darjeeling">
+                <div class="tour-card-content">
+                    <h3>Darjeeling</h3>
+                    <p>Experience the Himalayas and the world-famous toy train rides.</p>
+                    <a th:href="@{'/bookings/new?destination=Darjeeling&email=' + ${userEmail}}" class="book-btn">Book Now</a>
+                </div>
+            </div>
+
+            <!-- 6 -->
+            <div class="tour-card">
+                <img src="https://images.unsplash.com/photo-1602339752474-f77aa7bcaecd?ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&q=80&w=2073" alt="Jaipur">
+                <div class="tour-card-content">
+                    <h3>Jaipur - The Pink City</h3>
+                    <p>Explore royal palaces, vibrant bazaars, and colorful culture.</p>
+                    <a th:href="@{'/bookings/new?destination=Jaipur - The Pink City&email=' + ${userEmail}}" class="book-btn">Book Now</a>
+                </div>
+            </div>
+
+            <!-- 7 -->
+            <div class="tour-card">
+                <img src="https://images.unsplash.com/photo-1581793746485-04698e79a4e8?ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&q=80&w=2070" alt="Ladakh">
+                <div class="tour-card-content">
+                    <h3>Ladakh</h3>
+                    <p>Ride through high mountain passes and stunning blue lakes.</p>
+                    <a th:href="@{'/bookings/new?destination=Ladakh&email=' + ${userEmail}}" class="book-btn">Book Now</a>
+                </div>
+            </div>
+
+            <!-- 8 -->
+            <div class="tour-card">
+                <img src="https://images.unsplash.com/photo-1712510817140-917938f92e5b?ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&q=80&w=1074" alt="Rishikesh">
+                <div class="tour-card-content">
+                    <h3>Rishikesh</h3>
+                    <p>Experience spiritual retreats and thrilling river rafting.</p>
+                    <a th:href="@{'/bookings/new?destination=Rishikesh&email=' + ${userEmail}}" class="book-btn">Book Now</a>
+                </div>
+            </div>
+            <div class="tour-card">
+                <img src="https://images.unsplash.com/photo-1586359716568-3e1907e4cf9f?ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&q=80&w=1170" alt="Andaman Islands">
+                <div class="tour-card-content">
+                    <h3>Andaman Islands</h3>
+                    <p>Dive into turquoise waters, coral reefs, and tropical beaches in Andaman.</p>
+                    <a th:href="@{'/bookings/new?destination=Andaman Islands&email=' + ${userEmail}}" class="book-btn">Book Now</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <p>© 2025 Tourism Management Portal</p>
+    </footer>
+</body>
+</html>

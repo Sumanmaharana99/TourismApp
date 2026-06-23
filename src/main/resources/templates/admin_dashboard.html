@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin Dashboard | Tourism Portal</title>
+
+
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
+
+  <style>
+    body {
+      font-family: 'Poppins', sans-serif;
+      background: linear-gradient(135deg, #1a237e, #283593);
+      color: #e3f2fd;
+      margin: 0;
+      padding: 0;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* Navbar / Header */
+    header {
+      background: rgba(255, 255, 255, 0.08);
+      padding: 18px 50px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      backdrop-filter: blur(12px);
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+      position: sticky;
+      top: 0;
+      z-index: 10;
+    }
+
+    header h2 {
+      font-size: 24px;
+      color: #fff;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-weight: 600;
+    }
+
+    header nav a {
+      color: #fff;
+      text-decoration: none;
+      margin-left: 25px;
+      font-weight: 500;
+      transition: color 0.3s ease;
+    }
+
+    header nav a:hover {
+      color: #90caf9;
+    }
+
+    /* Main Container */
+    .container {
+      padding: 50px 60px;
+      flex: 1;
+    }
+
+    h1, h2 {
+      color: #ffffff;
+      margin-bottom: 20px;
+      font-weight: 600;
+    }
+
+    .section {
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 16px;
+      padding: 25px;
+      margin-bottom: 50px;
+      box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+      backdrop-filter: blur(8px);
+    }
+
+    /* Buttons */
+    .btn {
+      display: inline-block;
+      padding: 10px 16px;
+      border-radius: 10px;
+      font-weight: 600;
+      text-decoration: none;
+      color: #fff;
+      transition: all 0.3s ease;
+      border: none;
+      cursor: pointer;
+    }
+
+    .btn-add {
+      background: linear-gradient(90deg, #43a047, #66bb6a);
+      margin-bottom: 10px;
+    }
+
+    .btn-edit {
+      background: linear-gradient(90deg, #1e88e5, #42a5f5);
+    }
+
+    .btn-delete,
+    .btn-danger {
+      background: linear-gradient(90deg, #e53935, #d32f2f);
+    }
+
+    .btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 14px rgba(255, 255, 255, 0.2);
+      opacity: 0.95;
+    }
+
+    /* Tables */
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 15px;
+      border-radius: 14px;
+      overflow: hidden;
+      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.25);
+    }
+
+    th {
+      background: linear-gradient(90deg, #5c6bc0, #3949ab);
+      color: white;
+      padding: 14px;
+      text-align: center;
+      font-size: 0.95rem;
+    }
+
+    td {
+      padding: 12px;
+      text-align: center;
+      background: rgba(255, 255, 255, 0.08);
+      color: #e3f2fd;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+      font-size: 0.9rem;
+    }
+
+    tr:hover td {
+      background: rgba(255, 255, 255, 0.15);
+      transition: background 0.3s ease;
+    }
+
+    /* User Bookings Card */
+    .card {
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 16px;
+      padding: 25px;
+      box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+      backdrop-filter: blur(8px);
+    }
+
+    /* Scrollbar Styling */
+    ::-webkit-scrollbar {
+      width: 10px;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: rgba(255, 255, 255, 0.2);
+      border-radius: 10px;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: rgba(255, 255, 255, 0.3);
+    }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+      .container {
+        padding: 25px;
+      }
+
+      header {
+        flex-direction: column;
+        text-align: center;
+      }
+
+      table, th, td {
+        font-size: 0.85rem;
+      }
+
+      .btn {
+        font-size: 0.8rem;
+        padding: 8px 12px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <h2>👑 Admin Dashboard</h2>
+    <nav>
+      <a th:href="@{/admin/dashboard}">Dashboard</a>
+      <a th:href="@{/admin/logout}">Logout</a>
+    </nav>
+  </header>
+
+  >
+    <h2>User Bookings</h2>
+    <div class="card">
+      <table>
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>User Email</th>
+            <th>Destination</th>
+            <th>Travel Date</th>
+            <th>No. of Persons</th>
+            <th>Special Request</th>
+            <th>Booking Date</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr th:each="b : ${bookings}">
+            <td th:text="${b.id}"></td>
+            <td th:text="${b.userEmail}"></td>
+            <td th:text="${b.destination}"></td>
+            <td th:text="${#dates.format(b.travelDate, 'yyyy-MM-dd')}"></td>
+            <td th:text="${b.numPersons}"></td>
+            <td th:text="${b.specialRequest}"></td>
+            <td th:text="${#dates.format(b.bookingDate, 'yyyy-MM-dd HH:mm')}"></td>
+            <td>
+              <a th:href="@{'/admin/bookings/delete/' + ${b.id}}" 
+                 class="btn btn-danger">Delete</a>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+</body>
+</html>
